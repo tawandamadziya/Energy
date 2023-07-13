@@ -5,9 +5,11 @@
 
 trigger:
 - main
+
+
 variables:
-  uiSource:'src'
-  # uiBuild: '$(uiSource)/build'
+  uiSource: 'src'
+  uiBuild: '$(uiSource)/build'
 
 pool:
   vmImage: ubuntu-latest
