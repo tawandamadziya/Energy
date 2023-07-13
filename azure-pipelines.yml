@@ -35,39 +35,4 @@ steps:
     publishLocation: 'pipeline'
   displayName: 'Publish build artifacts'
 
-- task: CodeCoverage@1
-  inputs:
-    tool: 'lcov'
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/lcov.info'  # Assuming code coverage results are generated in the 'coverage' folder
-  displayName: 'Code coverage analysis'
 
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'MySonarCloudServiceConnection'  # Add your SonarCloud service connection name here
-    organization: 'my-organization'
-    projectKey: 'my-project'
-    projectName: 'My Project'
-    scannerMode: 'CLI'
-    configMode: 'manual'
-    cliProjectKey: 'my-project'
-    cliSources: '$(System.DefaultWorkingDirectory)'
-  displayName: 'Prepare analysis on SonarCloud'
-
-- script: |
-    npm run test  # Assuming you have configured tests in your project
-  displayName: 'Run tests'
-
-- task: SonarCloudAnalyze@1
-  displayName: 'Run SonarCloud analysis'
-
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '300'
-  displayName: 'Publish SonarCloud analysis results'
-
-- task: AzureWebApp@1
-  inputs:
-    azureSubscription: 'MyAzureServiceConnection'  # Add your Azure service connection name here
-    appName: 'my-react-app'
-    package: '$(Build.ArtifactStagingDirectory)/my-react-app'
-  displayName: 'Deploy to Azure Web App'
